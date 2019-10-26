@@ -10,7 +10,7 @@ class StatusType(Base):
     __tablename__= 'statustype'
     ststid=Column(Integer, primary_key=True,nullable=False)
     description=Column(String(225))
-    entity=Column(String(25),nullable=False,unique=true)
+    entity=Column(String(25),nullable=False,unique=True)
 
     # @property
     # def serialize(self):
@@ -30,8 +30,8 @@ class FoodItem(Base):
     __tablename__='fooditem'
     fid=Column(Integer, primary_key=True,nullable=False)
     name = Column(String(80), nullable=False)
-    stsid=Column(Integer,Foreignkey("status.stsid"),nullable=False)
-    cfid=Column(Integer,Foreignkey("foodcategory.cfid"),nullable=False)
+    stsid=Column(Integer,ForeignKey("status.stsid"),nullable=False)
+    cfid=Column(Integer,ForeignKey("foodcategory.cfid"),nullable=False)
     price=Column(Decimal(5,2))
     description=Column(String(225))
     # @property
@@ -41,7 +41,7 @@ class FoodCategory(Base):
     __tablename__='foodcategory'
     cfid=Column(Integer,nullable=False, primary_key=True)
     name = Column(String(80), nullable=False)
-    stsid=Column(Integer,Foreignkey("status.stsid"),nullable=False)
+    stsid=Column(Integer,ForeignKey("status.stsid"),nullable=False)
     price=Column(Decimal(5,2))
     description=Column(String(225))
     # @property
@@ -59,10 +59,10 @@ class EmployeeType(Base):
 class Employee(Base):
     __tablename__='employee'
     eid=Column(Integer,nullable=False, primary_key=True)
-    etid=Column(Integer, Foreignkey("employeetype.etid"),nullable=False)
+    etid=Column(Integer, ForeignKey("employeetype.etid"),nullable=False)
     fname = Column(String(80), nullable=False)
     lname = Column(String(80), nullable=False)
-    stsid=Column(Integer, Foreignkey("status.stsid"),nullable=False)
+    stsid=Column(Integer, ForeignKey("status.stsid"),nullable=False)
     price=Column(Decimal(5,2))
     # @property
     # def serialize(self):
@@ -71,10 +71,10 @@ class Employee(Base):
 class Transaction(Base):
     __tablename__='transaction'
     tid=Column(Integer,nullable=False, primary_key=True)
-    eid=Column(Integer, Foreignkey("employee.eid"),nullable=False)
+    eid=Column(Integer, ForeignKey("employee.eid"),nullable=False)
     date=Column(Date,nullable=false)
     totalamt=Column(Decimal(10,1),nullable=False)
-    stsid=Column(Integer, Foreignkey("status.stsid"),nullable=False)
+    stsid=Column(Integer, ForeignKey("status.stsid"),nullable=False)
     # @property
     # def serialize(self):
     #     return{'id':self.id,'name':self.name,}
@@ -82,10 +82,10 @@ class Transaction(Base):
 class CustomerOrder(Base):
     __tablename__='customer_order'
     tid=Column(Integer,nullable=False)
-    eid=Column(Integer, Foreignkey("employee.eid"),nullable=False)
+    eid=Column(Integer, ForeignKey("employee.eid"),nullable=False)
     qty=Column(Integer,nullable=false)
     amt=Column(Integer,nullable=False)
-    stsid=Column(Integer, Foreignkey("status.stsid"),nullable=False)
+    stsid=Column(Integer, ForeignKey("status.stsid"),nullable=False)
     # @property
     # def serialize(self):
     #     return{'id':self.id,'name':self.name,}
@@ -96,7 +96,7 @@ class FoodCategoryHistory(Base):
     description=Column(String(225))
     fromdate=Column(Date)
     todate=Column(Date)
-    stsid=Column(Integer, Foreignkey("status.stsid"),nullable=False)
+    stsid=Column(Integer, ForeignKey("status.stsid"),nullable=False)
     # @property
     # def serialize(self):
     #     return{'id':self.id,'name':self.name,}
