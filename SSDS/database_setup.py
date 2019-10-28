@@ -1,3 +1,6 @@
+import os
+
+import sys
 from sqlalchemy import String, Integer, ForeignKey, Column, ForeignKeyConstraint,TIMESTAMP,Date,DECIMAL
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
@@ -32,7 +35,7 @@ class FoodItem(Base):
     name = Column(String(80), nullable=False)
     stsid=Column(Integer,ForeignKey("status.stsid"),nullable=False)
     cfid=Column(Integer,ForeignKey("foodcategory.cfid"),nullable=False)
-    price=Column(Decimal(5,2))
+    price=Column(DECIMAL(5,2))
     description=Column(String(225))
     # @property
     # def serialize(self):
@@ -42,7 +45,7 @@ class FoodCategory(Base):
     cfid=Column(Integer,nullable=False, primary_key=True)
     name = Column(String(80), nullable=False)
     stsid=Column(Integer,ForeignKey("status.stsid"),nullable=False)
-    price=Column(Decimal(5,2))
+    price=Column(DECIMAL(5,2))
     description=Column(String(225))
     # @property
     # def serialize(self):
@@ -63,7 +66,7 @@ class Employee(Base):
     fname = Column(String(80), nullable=False)
     lname = Column(String(80), nullable=False)
     stsid=Column(Integer, ForeignKey("status.stsid"),nullable=False)
-    price=Column(Decimal(5,2))
+    price=Column(DECIMAL(5,2))
     # @property
     # def serialize(self):
     #     return{'id':self.id,'name':self.name,}
@@ -72,8 +75,8 @@ class Transaction(Base):
     __tablename__='transaction'
     tid=Column(Integer,nullable=False, primary_key=True)
     eid=Column(Integer, ForeignKey("employee.eid"),nullable=False)
-    date=Column(Date,nullable=false)
-    totalamt=Column(Decimal(10,1),nullable=False)
+    date=Column(Date,nullable=False)
+    totalamt=Column(DECIMAL(10,1),nullable=False)
     stsid=Column(Integer, ForeignKey("status.stsid"),nullable=False)
     # @property
     # def serialize(self):
@@ -81,9 +84,9 @@ class Transaction(Base):
  
 class CustomerOrder(Base):
     __tablename__='customer_order'
-    tid=Column(Integer,nullable=False)
+    tid=Column(Integer,nullable=False,primary_key=True)
     eid=Column(Integer, ForeignKey("employee.eid"),nullable=False)
-    qty=Column(Integer,nullable=false)
+    qty=Column(Integer,nullable=False)
     amt=Column(Integer,nullable=False)
     stsid=Column(Integer, ForeignKey("status.stsid"),nullable=False)
     # @property
